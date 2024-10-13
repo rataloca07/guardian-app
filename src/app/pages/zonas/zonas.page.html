@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gestión de Zonas Seguras</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardarZonaSegura()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Mapa de Leaflet -->
+  <div id="mapaZonas" style="height: 400px;"></div>
+
+  <ion-list>
+    <ion-item *ngFor="let zona of zonasSeguras">
+      <ion-label>
+        {{ zona.descripcion }} - {{ zona.radio }} m
+      </ion-label>
+      <ion-button slot="end" color="primary" (click)="editarZonaSegura(zona, $event)">
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" color="danger" (click)="eliminarZonaSegura(zona); $event.stopPropagation();">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GuardianApp</string>
+    <string name="title_activity_main">GuardianApp</string>
+    <string name="package_name">com.unmsm.guardianapp</string>
+    <string name="custom_url_scheme">com.unmsm.guardianapp</string>
+</resources>

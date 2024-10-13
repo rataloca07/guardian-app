@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270141425586",
+    "project_id": "guardian-b6940",
+    "storage_bucket": "guardian-b6940.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270141425586:android:16d03092b516cb409646ab",
+        "android_client_info": {
+          "package_name": "com.unmsm.guardianapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxKGoZvLcOQI8cJ8G1-n-g4XKM9soLdsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
