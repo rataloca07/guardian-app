@@ -1,16 +1,25 @@
-<ion-header>
+<!--<ion-header>
   <ion-toolbar>
+    <ion-title>Monitoreo del Paciente</ion-title>
+  </ion-toolbar>
+</ion-header>-->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
     <ion-title>Monitoreo del Paciente</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="monitor-content">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Ritmo Cardíaco: {{ ritmoCardiaco }} BPM</ion-card-title>
+      <ion-card-title>Paciente: {{ paciente?.nombre }}</ion-card-title> <!-- Nombre del paciente -->
+      <ion-card-subtitle>Ritmo Cardíaco: {{ ritmoCardiaco }} BPM</ion-card-subtitle> <!-- Ritmo cardiaco -->
     </ion-card-header>
   </ion-card>
 
   <!-- Mapa de Leaflet -->
-  <div id="map" style="height: 400px;"></div>
+  <div id="map"></div>
 </ion-content>

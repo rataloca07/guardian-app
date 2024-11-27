@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+/*import { Component } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { PacienteService } from 'src/app/core/services/paciente.service';
 import { Guardian } from 'src/app/core/models/Guardian';
@@ -85,5 +85,73 @@ export class RegisterPage {
         await alert.present();
       }
     );
+  }
+}*/
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Guardian } from 'src/app/core/models/Guardian';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
+})
+export class RegisterPage {
+  nombreGuardian: string = '';
+  email: string = '';
+  password: string = '';
+
+  constructor(
+    private authService: AuthService,
+    private alertController: AlertController,
+    private loadingController: LoadingController,
+    private router: Router
+  ) {}
+
+  async registrar() {
+    const loading = await this.loadingController.create({
+      message: 'Registrando guardián...'
+    });
+    await loading.present();
+
+    const nuevoGuardian: Guardian = {
+      id: '',
+      nombre: this.nombreGuardian,
+      email: this.email,
+      password: this.password,
+      tokenDispositivo: ''
+    };
+
+    // Registrar el guardián
+    console.log("Datos enviados:", nuevoGuardian);
+    this.authService.registrarGuardian(nuevoGuardian).subscribe(
+      async (res) => {
+        await loading.dismiss();
+        const alert = await this.alertController.create({
+          header: 'Éxito',
+          message: 'Guardían registrado correctamente',
+          buttons: ['OK']
+        });
+        await alert.present();
+        // Redirigir a la vista de registro de paciente
+        this.router.navigate(['/register-paciente']);
+      },
+      async (err) => {
+        await loading.dismiss();
+        const alert = await this.alertController.create({
+          header: 'Error',
+          message: 'Error al registrar el guardián',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
+    );
+  }
+
+  // Regresar a la vista de login
+  irALogin() {
+    this.router.navigate(['/login']);
   }
 }

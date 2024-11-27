@@ -50,10 +50,29 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
+  },
+  {
+    path: 'register-paciente',
+    loadChildren: () => import('./pages/register-paciente/register-paciente.module').then( m => m.RegisterPacientePageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'editar-paciente',
+    loadChildren: () => import('./pages/editar-paciente/editar-paciente.module').then(m => m.EditarPacientePageModule),
+    canActivate: [AuthGuard]  // Protegemos la ruta
+  },
+  {
     path: '',
     redirectTo: 'login',  // Si no hay ninguna ruta específica, redirigir a la página de inicio de sesión
     pathMatch: 'full'
+  },
+  {
+    path: 'editar-paciente',
+    loadChildren: () => import('./pages/editar-paciente/editar-paciente.module').then( m => m.EditarPacientePageModule)
   }
+  
 ];
 
 @NgModule({

@@ -164,6 +164,10 @@ export class AuthService {
     return await this.storage.get('pacienteId');
   }
 
+  async guardarPacienteId(pacienteId: string) {
+    await this.storage.set('pacienteId', pacienteId);
+  }
+
   // Obtener el nombre del guardián almacenado
 async obtenerNombreGuardian(): Promise<string> {
     return await this.storage.get('guardianNombre');

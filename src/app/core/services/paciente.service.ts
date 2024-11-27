@@ -113,4 +113,20 @@ export class PacienteService {
       });
     });
   }
+
+// Modificar un paciente
+modificarPaciente(paciente: Paciente): Observable<any> {
+  return new Observable(observer => {
+    this.getHeaders().then(headers => {
+      this.http.put(`${this.baseUrl}/modificar`, paciente, { headers }).subscribe(
+        res => {
+          observer.next(res);
+          observer.complete();
+        },
+        err => observer.error(err)
+      );
+    });
+  });
+}
+
 }

@@ -1,5 +1,11 @@
+
+
+
+
+
+
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Inicio</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
@@ -9,11 +15,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="home-content" *ngIf="paciente; else noPacienteTemplate">
   <ion-card>
     <ion-card-header>
       <ion-card-title>Bienvenido, {{ guardianNombre }}</ion-card-title>
-      <ion-card-subtitle>Paciente Asociado: {{ paciente?.nombre }}</ion-card-subtitle> <!-- Mostrar nombre del paciente -->
+      <ion-card-subtitle>Paciente Asociado: {{ paciente?.nombre }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <p>Ubicación actual del paciente: {{ paciente?.latitud }}, {{ paciente?.longitud }}</p>
@@ -21,6 +27,39 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="full" (click)="irAMonitoreo()">Monitorear Paciente</ion-button>
-  <ion-button expand="full" (click)="irAZonasSeguras()">Gestionar Zonas Seguras</ion-button>
+  <div class="button-container">
+    <ion-button expand="full" (click)="irAMonitoreo()">
+      <ion-icon name="eye"></ion-icon>
+      Monitorear Paciente
+    </ion-button>
+    <ion-button expand="full" (click)="irAZonasSeguras()">
+      <ion-icon name="map"></ion-icon>
+      Gestionar Zonas Seguras
+    </ion-button>
+    <ion-button expand="full" *ngIf="paciente.id" (click)="irAEditarPaciente()">
+      <ion-icon name="create"></ion-icon>
+      Editar Paciente
+    </ion-button>
+  </div>
 </ion-content>
+
+<!-- Si no hay paciente registrado -->
+<ng-template #noPacienteTemplate>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bienvenido, {{ guardianNombre }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Aún no tienes un paciente registrado.</p>
+      <p>Por favor, registra un paciente para comenzar.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="full" (click)="irARegistrarPaciente()">Registrar Paciente</ion-button>
+</ng-template>
+
+
+
+
+
+

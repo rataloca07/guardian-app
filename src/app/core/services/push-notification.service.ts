@@ -116,7 +116,7 @@ export class PushNotificationService {
     await toast.present(); // Muestra la notificación
   }
 }*/
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { PushNotifications, Token, PushNotificationSchema, PushNotificationActionPerformed } from '@capacitor/push-notifications';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
@@ -141,32 +141,6 @@ export class PushNotificationService {
       }
     });
 
-    // Obtener el token del dispositivo y actualizarlo en el backend .NET
-    /*PushNotifications.addListener('registration', async (token: Token) => {
-      console.log('Token de registro obtenido correctamente: ', token.value);
-      console.log('Push registration success, token: ' + token.value);
-
-      try {
-        const guardianId = await this.authService.obtenerGuardianId();  // Obtener el ID del guardián
-
-        // Primero, intenta eliminar el token anterior llamando al servicio .NET
-        this.authService.eliminarTokenDispositivo(guardianId).subscribe(() => {
-          console.log('Token anterior eliminado correctamente');
-
-          // Luego, actualiza con el nuevo token
-          this.authService.actualizarTokenDispositivo(guardianId, token.value).subscribe(() => {
-            console.log('Token de dispositivo guardado exitosamente');
-          }, (err) => {
-            console.error('Detalles del error al guardar el token:', JSON.stringify(err.error));
-            console.error('Error al guardar el token de dispositivo', err);
-          });
-        }, (err) => {
-          console.error('Error al eliminar el token de dispositivo anterior', err);
-        });
-      } catch (err) {
-        console.error('Error al obtener el ID del guardián o al actualizar el token', err);
-      }
-    });*/
 
     PushNotifications.addListener('registration', async (token: Token) => {
       console.log('Token de registro obtenido correctamente: ', token.value);
@@ -191,6 +165,106 @@ export class PushNotificationService {
     // Listener para cuando se recibe una notificación push
     PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
       console.log('Push received: ', notification);
+    });
+
+    // Listener para cuando el usuario toca la notificación push
+    PushNotifications.addListener('pushNotificationActionPerformed', (action: PushNotificationActionPerformed) => {
+      console.log('Push action performed: ', action);
+      
+      // Navegar a la vista de monitorización al tocar la notificación
+      this.router.navigate(['/monitor']).then(() => {
+        console.log('Navegando a la vista de monitorización');
+      }).catch(err => {
+        console.error('Error navegando a la vista de monitorización', err);
+      });
+    });
+  }
+}*/
+
+import { Injectable } from '@angular/core';
+import { PushNotifications, Token, PushNotificationSchema, PushNotificationActionPerformed } from '@capacitor/push-notifications';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { AlertController } from '@ionic/angular'; // Importar AlertController
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PushNotificationService {
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertController: AlertController // Inyectar AlertController
+  ) {}
+
+  // Inicializar notificaciones push
+  initializePushNotifications() {
+    PushNotifications.requestPermissions().then(result => {
+      if (result.receive === 'granted') {
+        PushNotifications.register();
+      } else {
+        console.error('El permiso para recibir notificaciones push fue denegado.');
+      }
+    });
+
+    // Obtener el token del dispositivo y actualizarlo en el backend
+    PushNotifications.addListener('registration', async (token: Token) => {
+      console.log('Token de registro obtenido correctamente: ', token.value);
+  
+      // Obtener el ID del guardián y actualizar el token
+      const guardianId = await this.authService.obtenerGuardianId();
+      
+      if (guardianId) {
+        console.log('Enviando token actualizado al backend');
+        this.authService.actualizarTokenDispositivo(guardianId, token.value).subscribe(() => {
+          console.log('Token de dispositivo guardado exitosamente');
+        }, (err) => {
+          console.error('Detalles del error:', JSON.stringify(err.error));
+          console.error('Error al guardar el token de dispositivo', err);
+        });
+      } else {
+        console.error('No se encontró un guardianId, no se puede actualizar el token');
+      }
+    });
+
+    // Listener para cuando se recibe una notificación push
+    /*PushNotifications.addListener('pushNotificationReceived', async (notification: PushNotificationSchema) => {
+      console.log('Push received: ', notification);
+      
+      // Mostrar una alerta en caso de que la notificación indique que el paciente está fuera de la zona segura
+      const alert = await this.alertController.create({
+        header: 'Alerta',
+        message: notification.body, // Mensaje de la notificación
+        buttons: ['OK']
+      });
+
+      await alert.present();
+    });*/
+
+    PushNotifications.addListener('pushNotificationReceived', async (notification: PushNotificationSchema) => {
+      console.log('Push received: ', notification);
+
+      // Mostrar una alerta en caso de que la notificación indique que el paciente está fuera de la zona segura
+      const alert = await this.alertController.create({
+        header: 'Alerta',
+        message: notification.body, // Mensaje de la notificación
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              // Navegar a la vista de monitorización al hacer clic en OK
+              this.router.navigate(['/monitor']).then(() => {
+                console.log('Navegando a la vista de monitorización');
+              }).catch(err => {
+                console.error('Error navegando a la vista de monitorización', err);
+              });
+            }
+          }
+        ]
+      });
+
+      await alert.present();
     });
 
     // Listener para cuando el usuario toca la notificación push

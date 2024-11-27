@@ -1,36 +1,31 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Registro de Guardián y Paciente</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Registro de Guardián</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="register-content">
   <ion-list>
     <ion-item>
       <ion-label position="floating">Nombre del Guardián</ion-label>
-      <ion-input [(ngModel)]="nombreGuardian" type="text"></ion-input>
+      <ion-input [(ngModel)]="nombreGuardian" type="text" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input [(ngModel)]="email" type="email"></ion-input>
+      <ion-input [(ngModel)]="email" type="email" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input [(ngModel)]="password" type="password"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Nombre del Paciente</ion-label>
-      <ion-input [(ngModel)]="nombrePaciente" type="text"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">SIM del Paciente</ion-label>
-      <ion-input [(ngModel)]="simPaciente" type="text"></ion-input>
+      <ion-input [(ngModel)]="password" type="password" required></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-button expand="full" (click)="registrar()">Registrar</ion-button>
+  <ion-button expand="full" (click)="registrar()" class="register-button">
+    Registrar Guardián
+  </ion-button>
+  <ion-button expand="full" fill="outline" (click)="irALogin()" class="login-button">
+    Regresar a Iniciar Sesión
+  </ion-button>
 </ion-content>

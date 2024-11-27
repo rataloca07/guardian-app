@@ -61,7 +61,13 @@ export class ZonasPage implements OnInit {
         this.map.removeLayer(this.marcador);
       }
 
-      this.marcador = L.marker(e.latlng).addTo(this.map);
+      var iconoMarcador = L.icon({
+        iconUrl: 'assets/icon/marker-icon.png',
+        iconSize: [25, 41]
+    });
+
+      //this.marcador = L.marker(e.latlng).addTo(this.map);
+      this.marcador = L.marker(e.latlng,{icon: iconoMarcador} ).addTo(this.map);
 
       if (this.circulo) {
         this.map.removeLayer(this.circulo);
@@ -105,6 +111,16 @@ export class ZonasPage implements OnInit {
 
   // Guardar la nueva zona segura
   async guardarZonaSegura() {
+    if (!this.marcador) {
+      // Si no hay un marcador, mostrar alerta
+      const alerta = await this.alertController.create({
+        header: 'Advertencia',
+        message: 'Primero toca el mapa para la ubicación de la nueva zona segura.',
+        buttons: ['OK']
+      });
+      await alerta.present();
+      return;  // Detener la ejecución del método si no hay marcador
+    }
     const alert = await this.alertController.create({
       header: 'Guardar Zona Segura',
       inputs: [
@@ -117,9 +133,9 @@ export class ZonasPage implements OnInit {
           name: 'radio',
           type: 'number',
           value: this.nuevaZona.radio,  // Valor por defecto
-          min: 2,
+          min: 5,
           max: 5000,
-          placeholder: 'Radio en metros (min 2m, max 5000m)'
+          placeholder: 'Radio en metros (min 5m, max 5000m)'
         }
       ],
       buttons: [
@@ -141,8 +157,8 @@ export class ZonasPage implements OnInit {
             }
 
             // Validar que el radio esté en el rango permitido
-            if (radioIngresado < 2 || radioIngresado > 5000) {
-              this.mostrarAlerta('Error', 'El radio debe estar entre 2 y 5000 metros.');
+            if (radioIngresado < 5 || radioIngresado > 5000) {
+              this.mostrarAlerta('Error', 'El radio debe estar entre 5 y 5000 metros.');
               return;
             }
 

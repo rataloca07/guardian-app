@@ -1,0 +1,34 @@
+<!--<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro de Paciente</ion-title>
+  </ion-toolbar>
+</ion-header>-->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Registrar Paciente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="register-paciente-content">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre del Paciente</ion-label>
+      <ion-input [(ngModel)]="nombrePaciente" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">SIM del Paciente</ion-label>
+      <ion-input [(ngModel)]="simPaciente" type="text" required></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="registrarPaciente()" class="register-button">
+    Registrar Paciente
+  </ion-button>
+</ion-content>

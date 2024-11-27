@@ -1,0 +1,73 @@
+/*.login-content {
+    padding: 16px; // Espaciado interno 
+    background-color: #f5f5f5; // Fondo claro 
+  }
+  
+  ion-item {
+    margin-bottom: 16px; // Espaciado entre los elementos 
+  }
+  
+  .login-button {
+    margin-top: 20px; // Espaciado superior para el botón 
+    border-radius: 8px; // Bordes redondeados 
+  }
+  
+  .register-button {
+    margin-top: 10px; // Espaciado superior para el botón de registro 
+    border-radius: 8px; // Bordes redondeados 
+  }
+  
+  ion-label {
+    font-size: 1.1rem; // Aumentar el tamaño de la etiqueta 
+  }
+  
+  ion-input {
+    font-size: 1rem; // Aumentar el tamaño de la entrada 
+  }*/
+  .login-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:  #f5f5f5 !important; /* Fondo claro */
+  }
+  
+  .login-card {
+    width: 90%;
+    max-width: 400px;
+    padding: 24px;
+    border-radius: 16px;
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  ion-item {
+    margin-bottom: 16px;
+  }
+  
+  .login-button {
+    margin-top: 20px;
+    border-radius: 8px;
+    --background: #6200ee;
+    --background-focused: #3700b3;
+    --background-hover: #3700b3;
+    --background-activated: #1a0e6b;
+    color: white;
+  }
+  
+  .register-button {
+    margin-top: 10px;
+    border-radius: 8px;
+    --border-color: #6200ee;
+    --background: transparent;
+    --background-hover: rgba(98, 0, 238, 0.1);
+    color: #6200ee;
+  }
+  
+  ion-label {
+    font-size: 1.1rem;
+  }
+  
+  ion-input {
+    font-size: 1rem;
+  }

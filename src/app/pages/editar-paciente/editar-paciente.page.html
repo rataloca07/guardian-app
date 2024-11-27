@@ -1,0 +1,37 @@
+<!--<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Paciente</ion-title>
+  </ion-toolbar>
+</ion-header>-->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Paciente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="edit-paciente-content">
+  <ion-list *ngIf="paciente">
+    <ion-item>
+      <ion-label position="floating">Nombre del Paciente</ion-label>
+      <ion-input [(ngModel)]="paciente.nombre" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">SIM del Paciente</ion-label>
+      <ion-input [(ngModel)]="paciente.sim" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="guardarCambios()" class="save-button">
+    Guardar Cambios
+  </ion-button>
+
+  <!-- Si no se cargó el paciente, mostrar un mensaje -->
+  <ion-text *ngIf="!paciente" class="no-data-text">
+    No se encontraron datos del paciente
+  </ion-text>
+</ion-content>
